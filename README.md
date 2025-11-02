@@ -41,10 +41,6 @@ prueba-tecnica/
 │
 ├── docs/                  # Documentación completa
 │   ├── POSTMAN_COLLECTION.json
-│   ├── GUIA_DOCUMENTACION_POSTMAN.md
-│   ├── EJEMPLOS_RESPUESTAS_API.md
-│   ├── GUIA_PRUEBAS_FUNCIONALIDAD.md
-│   └── ESTADO_PROYECTO.md
 │
 ├── database/              # Scripts de base de datos
 ├── docker-compose.dev.yml # Docker Compose para desarrollo
