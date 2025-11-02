@@ -1,12 +1,10 @@
-# Docker Compose (No probado - usar docker-compose.dev.yml para desarrollo)
-# Nota: Este archivo no ha sido probado y puede no funcionar correctamente
+# Docker Compose para desarrollo con hot-reload
 # Nota: version ya no es necesario en Docker Compose v2+
 
 services:
-  # Base de datos PostgreSQL
   db:
     image: postgres:15-alpine
-    container_name: personas_db
+    container_name: personas_db_dev
     environment:
       POSTGRES_DB: personas_db
       POSTGRES_USER: postgres
@@ -14,28 +12,29 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_dev:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
       retries: 5
 
-  # Backend Django
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: personas_backend
+    container_name: personas_backend_dev
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
-      - backend_static:/app/staticfiles
+      - /app/venv
+      - /app/__pycache__
+      - /app/*.pyc
     ports:
       - "8000:8000"
     environment:
       - DEBUG=1
-      - SECRET_KEY=dev-secret-key-change-in-production
+      - SECRET_KEY=dev-secret-key
       - USE_POSTGRESQL=True
       - DB_ENGINE=django.db.backends.postgresql
       - DB_NAME=personas_db
@@ -43,25 +42,19 @@ services:
       - DB_PASSWORD=postgres
       - DB_HOST=db
       - DB_PORT=5432
-      - ALLOWED_HOSTS=localhost,127.0.0.1,backend,0.0.0.0
+      - ALLOWED_HOSTS=*
+      - PYTHONUNBUFFERED=1
     depends_on:
       db:
         condition: service_healthy
     stdin_open: true
     tty: true
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/personas/')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 
-  # Frontend React
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: personas_frontend
+    container_name: personas_frontend_dev
     command: npm start
     volumes:
       - ./frontend:/app
@@ -71,13 +64,13 @@ services:
     environment:
       - REACT_APP_API_URL=http://localhost:8000/api
       - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     depends_on:
       - backend
     stdin_open: true
     tty: true
 
 volumes:
-  postgres_data:
+  postgres_data_dev:
     driver: local
-  backend_static:
-    driver: local
+
