@@ -1,0 +1,62 @@
+.register-page {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.register-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.content-area {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1400px) {
+  .content-area {
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .content-area {
+    padding: 24px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    padding: 20px 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    padding: 24px;
+  }
+}
