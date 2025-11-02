@@ -1,0 +1,316 @@
+{
+	"info": {
+		"_postman_id": "personas-api-collection",
+		"name": "Personas API - Prueba Técnica",
+		"description": "Colección completa de endpoints para la API de Gestión de Personas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Personas",
+			"item": [
+				{
+					"name": "Listar todas las personas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/personas/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"personas",
+								""
+							]
+						},
+						"description": "Obtiene todas las personas registradas en el sistema. Soporta paginación (10 items por página)."
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar persona por documento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/personas/?documento=900123456",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"personas",
+								""
+							],
+							"query": [
+								{
+									"key": "documento",
+									"value": "900123456",
+									"description": "Número de documento a buscar"
+								}
+							]
+						},
+						"description": "Busca una persona por su número de documento (NIT, CC, etc.)"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener persona por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/personas/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"personas",
+								"1",
+								""
+							]
+						},
+						"description": "Obtiene los detalles de una persona específica por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear persona (Jurídica)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo_persona\": \"JURIDICA\",\n    \"tipo_documento\": \"NIT\",\n    \"numero_documento\": \"900123456\",\n    \"digito_verificacion\": \"1\",\n    \"pais\": \"CO\",\n    \"departamento\": \"ATL\",\n    \"municipio\": \"BOG\",\n    \"direccion\": \"Calle 123 #45-67\",\n    \"razon_social\": \"Empresa Ejemplo S.A.S.\",\n    \"nombre_comercial\": \"Ejemplo Company\",\n    \"tipo_empresa_cacaotera\": \"COM\",\n    \"correo_electronico\": \"contacto@ejemplo.com\",\n    \"confirmar_correo_electronico\": \"contacto@ejemplo.com\",\n    \"numero_celular\": \"3001234567\",\n    \"confirmar_numero_celular\": \"3001234567\",\n    \"quien_diligencia\": \"Juan Pérez\",\n    \"cargo\": \"Gerente General\",\n    \"area\": \"Administración\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/personas/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"personas",
+								""
+							]
+						},
+						"description": "Crea una nueva persona jurídica (empresa). Los campos confirmar_correo_electronico y confirmar_numero_celular deben coincidir con correo_electronico y numero_celular respectivamente."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear persona (Natural)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo_persona\": \"NATURAL\",\n    \"tipo_documento\": \"CC\",\n    \"numero_documento\": \"1234567890\",\n    \"pais\": \"CO\",\n    \"departamento\": \"BOL\",\n    \"municipio\": \"MED\",\n    \"direccion\": \"Carrera 10 #20-30\",\n    \"correo_electronico\": \"persona@ejemplo.com\",\n    \"confirmar_correo_electronico\": \"persona@ejemplo.com\",\n    \"numero_celular\": \"3201234567\",\n    \"confirmar_numero_celular\": \"3201234567\",\n    \"quien_diligencia\": \"María García\",\n    \"cargo\": \"Coordinadora\",\n    \"area\": \"Comercial\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/personas/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"personas",
+								""
+							]
+						},
+						"description": "Crea una nueva persona natural. Los campos opcionales como razon_social y tipo_empresa_cacaotera no son necesarios para personas naturales."
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar persona",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo_persona\": \"JURIDICA\",\n    \"tipo_documento\": \"NIT\",\n    \"numero_documento\": \"900123456\",\n    \"digito_verificacion\": \"1\",\n    \"pais\": \"CO\",\n    \"departamento\": \"ATL\",\n    \"municipio\": \"BOG\",\n    \"direccion\": \"Calle 123 #45-67, Oficina 201\",\n    \"razon_social\": \"Empresa Actualizada S.A.S.\",\n    \"nombre_comercial\": \"Nuevo Nombre Comercial\",\n    \"tipo_empresa_cacaotera\": \"TRA\",\n    \"correo_electronico\": \"nuevo@ejemplo.com\",\n    \"confirmar_correo_electronico\": \"nuevo@ejemplo.com\",\n    \"numero_celular\": \"3109876543\",\n    \"confirmar_numero_celular\": \"3109876543\",\n    \"quien_diligencia\": \"Carlos Rodríguez\",\n    \"cargo\": \"Director\",\n    \"area\": \"Operaciones\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/personas/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"personas",
+								"1",
+								""
+							]
+						},
+						"description": "Actualiza todos los campos de una persona existente. Reemplaza el ID 1 con el ID de la persona que deseas actualizar."
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar persona",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/personas/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"personas",
+								"1",
+								""
+							]
+						},
+						"description": "Elimina una persona del sistema. Reemplaza el ID 1 con el ID de la persona que deseas eliminar. Esto también eliminará todas las tareas asociadas a esa persona."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para el CRUD completo de Personas"
+		},
+		{
+			"name": "Tareas",
+			"item": [
+				{
+					"name": "Listar todas las tareas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tareas/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tareas",
+								""
+							]
+						},
+						"description": "Obtiene todas las tareas registradas en el sistema, incluyendo la información de la persona asociada."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tarea por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tareas/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tareas",
+								"1",
+								""
+							]
+						},
+						"description": "Obtiene los detalles de una tarea específica por su ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear tarea",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"persona\": 1,\n    \"titulo\": \"Revisar documentación fiscal\",\n    \"descripcion\": \"Verificar y actualizar todos los documentos fiscales de la empresa\",\n    \"fecha_limite\": \"2025-12-31\",\n    \"completada\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tareas/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tareas",
+								""
+							]
+						},
+						"description": "Crea una nueva tarea asociada a una persona. El campo 'persona' debe ser el ID de una persona existente."
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar tarea",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"persona\": 1,\n    \"titulo\": \"Revisar documentación fiscal - Actualizado\",\n    \"descripcion\": \"Verificar y actualizar todos los documentos fiscales. Prioridad alta.\",\n    \"fecha_limite\": \"2025-11-30\",\n    \"completada\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tareas/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tareas",
+								"1",
+								""
+							]
+						},
+						"description": "Actualiza una tarea existente. Reemplaza el ID 1 con el ID de la tarea que deseas actualizar."
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar tarea",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tareas/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tareas",
+								"1",
+								""
+							]
+						},
+						"description": "Elimina una tarea del sistema. Reemplaza el ID 1 con el ID de la tarea que deseas eliminar."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para el CRUD completo de Tareas"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		}
+	]
+}
+
